@@ -36,8 +36,8 @@ public class ServerDatabase {
 	{
 		
 		try {
-		Champ champUsername = new Champ("username", username, true);
-		Champ champPass = new Champ("password", password, true);
+		Champ champUsername = new Champ("username", username);
+		Champ champPass = new Champ("password", password);
 		
 		ArrayList<Champ> champs = new ArrayList<Champ>();
 		champs.add(champUsername);

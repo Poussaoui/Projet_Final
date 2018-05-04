@@ -9,8 +9,8 @@ public class requetesbd {
 
     public static void nbseminaire(Connection conn) throws
             SQLException {
-// Get a statement from the connection
-        Statement stmt = conn.createStatement();
+
+      
 /* Execute the query
         ResultSet rs = stmt.executeQuery("SELECT idSem FROM inscription ");
         while (rs.next()) {
@@ -22,7 +22,8 @@ public class requetesbd {
         stmt.close();
     }*/
 
-    String sql = "SELECT * FROM prestataire"; 
+   /* String sql = "SELECT * FROM prestataire"; 
+ // Get a statement from the connection
     Statement statement = conn.createStatement(); 
     ResultSet resultat = statement.executeQuery(sql); 
     ResultSetMetaData metadata = resultat.getMetaData(); 
@@ -36,7 +37,28 @@ public class requetesbd {
        System.out.println("Nom du type SQL : "+nomTypeSQL); 
        System.out.println("Classe java correspondante : "+typeJava); 
     }
+    	
     resultat.close();
-    statement.close();
+    statement.close();*/
+    	
+    	
+    	 // Get a statement from the connection
+        Statement stmt = conn.createStatement(); 
+    	String req="select * from profil";
+    	 
+    	 
+    	 ResultSet rs = stmt.executeQuery(req);
+    	 ResultSetMetaData rsmd = rs.getMetaData();
+    	 System.out.println("No. of columns : " + rsmd.getColumnCount());
+    	 for(int i=1;i<=rsmd.getColumnCount();i++) {
+    		 System.out.println("Column name of 1st column : " + rsmd.getColumnName(i));
+        	 System.out.println("Column type of 1st column : " + rsmd.getColumnTypeName(i));
+        	 System.out.println("Column type java of 1st column : " + rsmd.getColumnClassName(i));
+    	 }
+    	 
+    	 
+    	 rs.close();
+    	 stmt.close();
+
     }
 }

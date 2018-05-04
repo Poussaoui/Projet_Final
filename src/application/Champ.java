@@ -4,8 +4,7 @@ package application;
 
 public class Champ {
 	 private String nom;
-	 private Object valeur; 
-	 private boolean opt;
+	 private Object valeur;
 	    
 	 /**
 	  * 
@@ -13,15 +12,13 @@ public class Champ {
 	  * @param v
 	  * @param opt
 	  * @throws Exception 
-	  * @require val not null : opt && val.equals(null)
+	  * @require val_not_null : opt && val.equals(null)
 	  */
-	 public Champ(String name, Object v, boolean opt) throws Exception{
-	    if(opt && v.equals(null)) throw new Exception("Le champ doit être rempli");
-	    else {
+	 public Champ(String name, Object v) throws Exception{
+		 	if( name.equals(null) ) throw new Exception("name = null");
 	    	this.nom = name;
 		    this.valeur = v;
-		    this.opt=opt;
-	    }
+	    
 	 }
 	 
 	    
@@ -36,16 +33,12 @@ public class Champ {
 	  * @return valeur
 	  */
 	 public Object getValeurChamp() {return this.valeur;}
-	 
-	 /**
-	  * @return opt
-	  */
-	 public boolean getOptionnal() {return opt;}
+	
 	 
 	 /**
 	  * modifie la valeur d'un champ
 	  * @param val
 	  */
 	 public void modifierValeur(Object val) {valeur=val;}
-	
+	 
 }
