@@ -7,7 +7,7 @@ import java.util.ArrayList;
 
 
 public class Profil {
-	protected static ArrayList<Champ> champs; 
+	protected ArrayList<Champ> champs; 
 	
 	/**
 	 * 
@@ -19,27 +19,77 @@ public class Profil {
 	public Profil(ArrayList<Champ> c) {
 		champs = new ArrayList<Champ>();
 		champs = c;
-	}
-		
+	}		
 	
 	/**
-	 * obtenir les champs
+	 * 
 	 * @return les champs de la class Profil
 	 */
-	public ArrayList<Champ> getChamps() {return Profil.champs;}
-		
-
+	public ArrayList<Champ> getChamps() {return champs;}
+	
 	/**
-	 * @param nomChamp
-	 * @param val
+	 * 
+	 * @return
 	 */
-	public void modifierValeurChamp(String nom, Object val) {	
-		for(int i=0;i<champs.size();i++) {
-			if(champs.get(i).getNameChamp().equals(nom)) {
-				champs.get(i).modifierValeur(val);
+	public String champToString() {
+		
+		/** on met les noms et les valeurs des champs du profil 
+		 * dans une chaine de caracteres **/
+        String s="";	
+        for(int i=0; i<this.getChamps().size() ; i++) {        		
+        	if(i==this.getChamps().size()-1) {
+        		 s = s + this.getChamps().get(i).getNameChamp()+" = '"+this.getChamps().
+        				 get(i).getValeurChamp().toString()+"'";
+        	}else {
+        		 s = s + this.getChamps().get(i).getNameChamp()+" = '"+this.getChamps().
+        				 get(i).getValeurChamp().toString()+"' , ";
+        	} 
+        }
+		return s;
+	}
+	
+	/**
+	 * 
+	 * @return
+	 */
+	public String champToCondition() {
+		
+		/** on met les noms et les valeurs des champs du profil dans une chaine de 
+		 * caracteres pour gérer la condition **/
+        String s="";	
+        for(int i=0; i<this.getChamps().size() ; i++) {        		
+        	if(i==this.getChamps().size()-1) {
+        		 s = s + this.getChamps().get(i).getNameChamp()+" = '"+this.getChamps().
+        				 get(i).getValeurChamp().toString()+"'";
+        	}else {
+        		 s = s + this.getChamps().get(i).getNameChamp()+" = '"+this.getChamps().
+        				 get(i).getValeurChamp().toString()+"' and ";
+        	} 
+        }
+		return s;
+	}
+		
+	/**
+	 * 
+	 * @param c
+	 * @return 
+	 * @throws Exception 
+	 */
+	public void modifierProfil(ArrayList<Champ> c) throws Exception {
+		
+		for(int i=0 ; i<c.size() ; i++) {
+			for(int j=0 ; j<champs.size() ; j++) {
+				if(c.get(i).getNameChamp().toUpperCase().equals(champs.get(j).getNameChamp().toUpperCase())) {
+					champs.get(j).modifierValeur(c.get(i).getValeurChamp());
+				}
 			}
 		}
 	}
+	
+	
+
+	
+	
 	
 
 }

@@ -23,14 +23,11 @@ public class ConnexionSGBD {
             try (Connection conn = DriverManager.getConnection(dbUrl, username, password)) {
             	//requetesbd.nbseminaire(conn);
             	
-            	
-            	
             	String table="profil";
             	Services s = new Services();
             	
             	ArrayList<Champ> champs = s.retourChamp(table);
-            	
-            	
+          	
             	s.inscription(champs);
             	
             	Profil p = new Profil(champs);
@@ -40,6 +37,18 @@ public class ConnexionSGBD {
             	s.inserer(table, champs);
             	
             	System.out.println("ça marche");
+            	
+            	ArrayList<Champ> c = new ArrayList<>();
+            	
+            	/** on veut modifier le champ PASS **/
+            	c.add(new Champ("PASS", "yooo"));
+            	
+            	/** on modifie le mot de passe du profil créé **/
+            	ArrayList<Champ> oldChamp = p.modifierProfil(c);
+            	/** pour mettre à jour dans la table **/
+            	s.updateProfil(table, p, oldChamp);
+            	
+            	System.out.println("hehehe");
             	
                 // Print information about connection warnings
                 SQLWarningsExceptions.printWarnings(conn);

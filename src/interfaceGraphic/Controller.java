@@ -26,11 +26,13 @@ public class Controller implements Initializable {
 	private TextField _textf;
 	@FXML
 	private Button connexion;
+	@FXML
+	private TextField login;
 	
+	//private Button inscriOk;
 	public void initialize(URL location, ResourceBundle resources) {
-
 	       // TODO (don't really need to do anything here).
-
+		//login = new TextField();
 	   }
 	
 	@FXML
@@ -103,6 +105,25 @@ public class Controller implements Initializable {
            
 		} catch(Exception e) {
 			e.printStackTrace();
+		}
+	}
+	
+	String logine = "dqsg";
+	@FXML
+	public String getLogin() {
+		logine = login.getText();
+		return logine;
+	}
+	
+	@FXML
+	public void inscriOk(ActionEvent event) {		
+		//login = new TextField();
+		//return logine;
+		if (login.getText() == null) {
+			System.out.println("it is null");
+		}
+		else { System.out.println(login.getText());
+		
 		}
 	}
 }
