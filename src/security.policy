@@ -1,0 +1,14 @@
+grant {
+     	permission java.security.AllPermission;
+  };
+  
+  grant codeBase "file:/C:/Users/Mohamed/workspace/RMI-Projet/ProjetPackage/src" {
+    permission java.security.AllPermission;
+};
+
+  grant codeBase "file:/C:/Users/Mohamed/workspace/RMI-Projet/ProjetPackage/src/framwork/serveur/base/db/connection/BD.properties" {
+    permission java.security.AllPermission;
+};
+
+-Djava.rmi.server.hostname=127.0.0.1
+//-Djava.security.debug=access,failure
