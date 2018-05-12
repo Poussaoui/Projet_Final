@@ -28,6 +28,7 @@ import javax.swing.UIManager.LookAndFeelInfo;
 import javax.swing.border.Border;
 
 import framwork.client.Client;
+import framwork.remote._ChatServer;
 
 public class ClientRMIGUI extends JFrame implements ActionListener{
 	
@@ -37,15 +38,18 @@ public class ClientRMIGUI extends JFrame implements ActionListener{
 	private String name, message;
 	private Font meiryoFont = new Font("Meiryo", Font.PLAIN, 14);
 	private Border blankBorder = BorderFactory.createEmptyBorder(10,10,20,10);//top,r,b,l
-	private ChatClient chatClient;
-	private Client remoteClient;
+	private Client client;
     private JList<String> list;
     private DefaultListModel<String> listModel;
     
-    protected JTextArea textArea, userArea;
-    protected JFrame frame;
-    protected JButton privateMsgButton, startButton, sendButton ,sendFile;
-    protected JPanel clientPanel, userPanel;
+    public JTextArea textArea;
+    public JTextArea userArea;
+    public JFrame frame;
+    public JButton privateMsgButton;
+    public JButton startButton;
+    public JButton sendButton;
+    public JButton sendFile;
+    public JPanel clientPanel, userPanel;
 
 	/**
 	 * Main method to start client GUI app.
@@ -54,7 +58,7 @@ public class ClientRMIGUI extends JFrame implements ActionListener{
 	public static void main(String args[]){
 		//set the look and feel to 'Nimbus'
 		try{
-			System.setProperty("java.rmi.server.hostname","147.171.175.111");
+			System.setProperty("java.rmi.server.hostname","147.171.175.115");
 			for(LookAndFeelInfo info : UIManager.getInstalledLookAndFeels()){
 				if("Nimbus".equals(info.getName())){
 					UIManager.setLookAndFeel(info.getClassName());
@@ -84,10 +88,10 @@ public class ClientRMIGUI extends JFrame implements ActionListener{
 		    @Override
 		    public void windowClosing(java.awt.event.WindowEvent windowEvent) {
 		        
-		    	if(chatClient != null){
+		    	if(client != null){
 			    	try {
 			        	sendMessage("Bye all, I am leaving");
-			        	chatClient.serverIF.leaveChat(name);
+			        	((_ChatServer) client.getRemote()).leaveChat(name);
 					} catch (RemoteException e) {
 						e.printStackTrace();
 					}		        	
@@ -219,7 +223,7 @@ public class ClientRMIGUI extends JFrame implements ActionListener{
 
 		sendFile = new JButton("Send File");
 		sendFile.addActionListener(this);
-		sendFile.setEnabled(true);
+		sendFile.setEnabled(false);
 		
         privateMsgButton = new JButton("Send PM");
         privateMsgButton.addActionListener(this);
@@ -253,7 +257,7 @@ public class ClientRMIGUI extends JFrame implements ActionListener{
 					textField.setText("");
 					textArea.append("username : " + name + " connecting to chat...\n");							
 					getConnected(name);
-					if(!chatClient.connectionProblem){
+					if(!client.connectionProblem){
 						startButton.setEnabled(false);
 						sendButton.setEnabled(true);
 						sendFile.setEnabled(true);
@@ -275,6 +279,7 @@ public class ClientRMIGUI extends JFrame implements ActionListener{
 			//get text and clear textField
 			if(e.getSource() == sendFile){
 				
+				
 				JFileChooser fileChooser = new JFileChooser();
 				 
 		        // For Directory
@@ -285,10 +290,12 @@ public class ClientRMIGUI extends JFrame implements ActionListener{
 		 
 		        fileChooser.setAcceptAllFileFilterUsed(true);
 		 
-		        int rVal = fileChooser.showOpenDialog(null);
+		        int rVal = fileChooser.showOpenDialog(clientPanel);
 		        if (rVal == JFileChooser.APPROVE_OPTION) {
 		        	System.out.println(fileChooser.getSelectedFile().toString());
+		        	client.uploadFile(fileChooser.getSelectedFile().toString(), "C:\\files\\server\\"+fileChooser.getSelectedFile().getName().toString());
 		        }
+		        
 			}
 			
 			//send a private message, to selected users
@@ -306,6 +313,9 @@ public class ClientRMIGUI extends JFrame implements ActionListener{
 		}
 		catch (RemoteException remoteExc) {			
 			remoteExc.printStackTrace();	
+		} catch (Exception e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
 		}
 		
 	}//end actionPerformed
@@ -318,7 +328,8 @@ public class ClientRMIGUI extends JFrame implements ActionListener{
 	 * @throws RemoteException
 	 */
 	private void sendMessage(String chatMessage) throws RemoteException {
-		chatClient.serverIF.updateChat(name, chatMessage);
+		//chatClient.serverIF.updateChat(name, chatMessage);
+		((_ChatServer) client.getRemote()).updateChat(name, chatMessage);
 	}
 
 	/**
@@ -328,7 +339,8 @@ public class ClientRMIGUI extends JFrame implements ActionListener{
 	 */
 	private void sendPrivate(int[] privateList) throws RemoteException {
 		String privateMessage = "[PM from " + name + "] :" + message + "\n";
-		chatClient.serverIF.sendPM(privateList, privateMessage);
+		//chatClient.serverIF.sendPM(privateList, privateMessage);
+		((_ChatServer) client.getRemote()).sendPM(privateList, privateMessage);
 	}
 	
 	/**
@@ -341,8 +353,10 @@ public class ClientRMIGUI extends JFrame implements ActionListener{
 		String cleanedUserName = userName.replaceAll("\\s+","_");
 		cleanedUserName = userName.replaceAll("\\W+","_");
 		try {		
-			chatClient = new ChatClient(this, cleanedUserName);
-			chatClient.startClient();
+			client = new Client(this, cleanedUserName);
+			client.setRMIConnection("147.171.175.115", "ReseauSocial");
+			client.addClient();
+			
 		} catch (RemoteException e) {
 			e.printStackTrace();
 		}

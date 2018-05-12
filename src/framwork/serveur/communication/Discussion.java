@@ -35,11 +35,12 @@ public class Discussion {
 	}
 
 	/**
-	 * Receive a new client remote reference  +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+	 * Receive a new client remote reference
+	 * +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 	 */
 
 	public void passIDentity(RemoteRef ref) throws RemoteException {
-		//System.out.println("\n" + ref.remoteToString() + "\n");
+		// System.out.println("\n" + ref.remoteToString() + "\n");
 		try {
 			System.out.println(line + ref.toString());
 		} catch (Exception e) {
@@ -61,24 +62,23 @@ public class Discussion {
 	}
 
 	/**
-	 * register the clients interface and store it in a reference for future
-	 * messages to be sent to, ie other members messages of the chat session.
-	 * send a test message for confirmation / test connection
+	 * stocker register de client en référence pour des messages futurs à être envoyé,
+	 *  C'EST-À-DIRE les messages de la session de chat d'autres membres. 
+	 	puis envoyer un message de test pour la confirmation/la connexion de test
 	 * 
 	 * @param details
 	 */
 	private void registerChatter(String[] details) {
 		try {
-			
-			_ChatClient nextClient = (_ChatClient) Naming.lookup("rmi://"
-					+ details[1] + "/" + details[2]);
+
+			_ChatClient nextClient = (_ChatClient) Naming.lookup("rmi://"+ details[1] + "/" + details[2]);
 
 			chatters.addElement(new Chatter(details[0], nextClient));
 
-			nextClient.messageFromServer("[Server] : Hello " + details[0]
-					+ " you are now free to chat.\n");
+			nextClient.messageFromServer("[Server] : Bonjour !, " + details[0]
+					+ " vous êtes maintenant libre de discuter.\n");
 
-			sendToAll("[Server] : " + details[0] + " has joined the group.\n");
+			sendToAll("[Server] : " + details[0] + " vient de rejoindre Messenger !.\n");
 
 			updateUserList();
 		} catch (RemoteException | MalformedURLException | NotBoundException e) {
@@ -87,7 +87,7 @@ public class Discussion {
 	}
 
 	/**
-	 * Update all clients by remotely invoking their updateUserList RMI method
+	 * Metter à jour tous les clients en invoquant à distance leur updateUserList rmi methode
 	 */
 	private void updateUserList() {
 		String[] currentUsers = getUserList();
@@ -101,12 +101,11 @@ public class Discussion {
 	}
 
 	/**
-	 * generate a String array of current users
+	 * Produire un tableau des utilisateurs actuels
 	 * 
 	 * @return
 	 */
 	private String[] getUserList() {
-		// generate an array of current users
 		String[] allUsers = new String[chatters.size()];
 		for (int i = 0; i < allUsers.length; i++) {
 			allUsers[i] = chatters.elementAt(i).getName();
@@ -115,7 +114,7 @@ public class Discussion {
 	}
 
 	/**
-	 * Send a message to all users
+	 * Envoyer message a tous les utilisateurs
 	 * 
 	 * @param newMessage
 	 */
@@ -130,7 +129,7 @@ public class Discussion {
 	}
 
 	/**
-	 * remove a client from the list, notify everyone
+	 * Enlever un client de la liste, et notifier tout les clients
 	 */
 	public void leaveChat(String userName) throws RemoteException {
 
@@ -148,9 +147,8 @@ public class Discussion {
 	}
 
 	/**
-	 * A method to send a private message to selected clients The integer array
-	 * holds the indexes (from the chatters vector) of the clients to send the
-	 * message to
+	 * Une méthode d'envoyer un message privé aux clients choisis le tableau
+	 * d'entier tient les index(indices) des clients envoyer et message
 	 */
 	public void sendPM(int[] privateGroup, String privateMessage)
 			throws RemoteException {

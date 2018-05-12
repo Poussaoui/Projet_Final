@@ -9,25 +9,26 @@ import java.rmi.Remote;
 import java.rmi.RemoteException;
 import java.rmi.registry.LocateRegistry;
 import framwork.remote.*;
-import framwork.serveur.base.serveurImpl.ServeurImpl;
+import framwork.serveur.base.ServeurImpl;
 
 public class LanceServeur {
 
   public static void main(String[] args) {
     try {
-      System.setProperty("java.rmi.server.hostname","147.171.175.111");
+      System.setProperty("java.rmi.server.hostname","147.171.175.115");
       LocateRegistry.createRegistry(Constant.portNumber);
 /*
       System.out.println("Mise en place du Security Manager ...");
       if (System.getSecurityManager() == null) {
         System.setSecurityManager(new RMISecurityManager());
       }
-*/
-      ServeurImpl myServeur = new ServeurImpl();
+*/ 
+      ServeurImpl myServeur = new ServeurImpl("C:\\Users\\Mohamed\\Desktop\\storageDir");
+      
       //myServeur.setFile("src//Bum_Tam.mp3");      
       //String url = "rmi://" + InetAddress.getLocalHost().getHostAddress() + "/TestRMI";
 
-      String url = "rmi://147.171.175.111/ReseauSocial";
+      String url = "rmi://147.171.175.115/ReseauSocial";
       System.out.println("Enregistrement de l'objet avec l'url : " + url);
       Naming.rebind(url, myServeur);
 

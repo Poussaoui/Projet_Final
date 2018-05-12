@@ -1,4 +1,4 @@
-package framwork.client;
+package application;
 
 import java.rmi.Remote;
 import java.rmi.RemoteException;
@@ -10,6 +10,8 @@ import java.util.Map;
 import java.util.Scanner;
 import java.util.TreeMap;
 
+
+import framwork.client.Client;
 import framwork.remote._Admin;
 import framwork.remote._Profil;
 
@@ -21,14 +23,15 @@ public class LanceClient {
 		System.out.println("Lancement du client");
 		
 		Client clint = new Client();
-		clint.setRMIConnection("147.171.175.111", "ReseauSocial");
+		clint.setRMIConnection("147.171.175.115", "ReseauSocial");
 		
+		//inscriptionTest((_Profil) clint.getRemote());
 		authenticationTest(clint.getRemote());
-
-		TreeMap<String, Object> tmap = new TreeMap<String, Object>();
-	     /*Adding elements to TreeMap*/
-	     tmap.put("LOGIN", "yoyo");
-	     tmap.put("PASS", "yoyo");
+		ClientRMIGUI cliGUI = new ClientRMIGUI();
+//		TreeMap<String, Object> tmap = new TreeMap<String, Object>();
+//	     /*Adding elements to TreeMap*/
+//	     tmap.put("LOGIN", "yoyo");
+//	     tmap.put("PASS", "yoyo");
 		//supprissionTest(clint.getRemote(), tmap);
 		
 
@@ -62,7 +65,7 @@ public class LanceClient {
 
 	// ************ demande a l'utilisateur de remplir les champs ************
 	public static TreeMap<String, Object> inscriptionFormulConsol(
-			TreeMap<String, Object> champs) { // ArrayList<Champ> ch
+			TreeMap<String, Object> champs) {
 		Scanner sc;
 		for (Map.Entry<String, Object> entry : champs.entrySet()) {
 			System.out.println("Donnez une valeur pour " + entry.getKey());
