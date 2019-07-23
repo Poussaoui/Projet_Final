@@ -14,7 +14,7 @@ On  a choisi de travailler avec la méthode SCRUM , le processus agile qui perme
 
  Un groupe de développement « Dan, Dian et Yi » qui font des parties de développement comme les taches (connexion / inscription / publication … )
 
- Un développeur réseau «Mohamed» qui s’occupe de la partie RMI / communication client & serveur
+ Un développeur réseau «Mohamed» qui s’occupe de la partie RMI / communication client & serveur et UI.
 
  Les documentalistes «Loubna & Abel» qui sont en charge de rédiger le rapport et les comptes rendu ainsi d'autres tâches de gestion ou de développement.
 
