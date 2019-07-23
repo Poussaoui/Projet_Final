@@ -30,3 +30,15 @@ Fonctionnalité
 4 - Réaction à une publication
 5 - Mettre du contenu dans la publication
 6 - Commentaire à une publication
+
+
+![Diagramme de cas d'utilisation](screenshots/server1.PNG)
+![Diagramme de cas d'utilisation](screenshots/server2.PNG)
+
+![Diagramme de cas d'utilisation](screenshots/home.PNG)
+
+![Diagramme de cas d'utilisation](screenshots/login.PNG)
+
+![Diagramme de cas d'utilisation](screenshots/profile_diff.PNG)
+
+![Diagramme de cas d'utilisation](screenshots/profile_std.PNG)
